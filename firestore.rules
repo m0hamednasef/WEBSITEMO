@@ -1,0 +1,70 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+    function incoming() {
+      return request.resource.data;
+    }
+    function existing() {
+      return resource.data;
+    }
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email.lower() == 'mostudioapps@gmail.com' ||
+        request.auth.uid == 'mg6CUPqOkWglKlIZ4yQwujCLWkm2'
+      );
+    }
+
+    function isValidApp(data) {
+      return (!('name' in data) || (data.name is string && data.name.size() > 0 && data.name.size() <= 200)) &&
+             (!('description' in data) || (data.description is string && data.description.size() <= 2000)) &&
+             (!('iconUrl' in data) || (data.iconUrl is string && data.iconUrl.size() <= 500000)) &&
+             (!('playStoreUrl' in data) || (data.playStoreUrl is string && data.playStoreUrl.size() <= 2000)) &&
+             (!('order' in data) || (data.order is number)) &&
+             (!('category' in data) || (data.category is string && data.category.size() <= 200)) &&
+             (!('downloadsBadge' in data) || (data.downloadsBadge is string && data.downloadsBadge.size() <= 100)) &&
+             (!('ratingBadge' in data) || (data.ratingBadge is string && data.ratingBadge.size() <= 100)) &&
+             (!('nameAr' in data) || (data.nameAr is string && data.nameAr.size() <= 200)) &&
+             (!('descriptionAr' in data) || (data.descriptionAr is string && data.descriptionAr.size() <= 2000)) &&
+             (!('version' in data) || (data.version is string && data.version.size() <= 50)) &&
+             (!('privacyUrl' in data) || (data.privacyUrl is string && data.privacyUrl.size() <= 1000)) &&
+             (!('features' in data) || (data.features is list && data.features.size() <= 20)) &&
+             (!('featuresAr' in data) || (data.featuresAr is list && data.featuresAr.size() <= 20));
+    }
+
+    function isValidSiteSettings(data) {
+      return (!('heroHeadline' in data) || (data.heroHeadline is string && data.heroHeadline.size() <= 500)) &&
+             (!('tagline' in data) || (data.tagline is string && data.tagline.size() <= 1000)) &&
+             (!('aboutText' in data) || (data.aboutText is string && data.aboutText.size() <= 5000)) &&
+             (!('contactEmail' in data) || (data.contactEmail is string && data.contactEmail.size() <= 200)) &&
+             (!('heroHeadlineAr' in data) || (data.heroHeadlineAr is string && data.heroHeadlineAr.size() <= 500)) &&
+             (!('taglineAr' in data) || (data.taglineAr is string && data.taglineAr.size() <= 1000)) &&
+             (!('aboutTextAr' in data) || (data.aboutTextAr is string && data.aboutTextAr.size() <= 5000));
+    }
+
+    match /apps/{appId} {
+      allow get: if isValidId(appId);
+      allow list: if true;
+      allow create: if isAdmin() && isValidId(appId) && isValidApp(incoming());
+      allow update: if isAdmin() && isValidId(appId) && isValidApp(incoming());
+      allow delete: if isAdmin() && isValidId(appId);
+    }
+
+    match /site_content/{contentId} {
+      allow get: if isValidId(contentId);
+      allow list: if true;
+      allow create: if isAdmin() && isValidId(contentId) && isValidSiteSettings(incoming());
+      allow update: if isAdmin() && isValidId(contentId) && isValidSiteSettings(incoming());
+      allow delete: if isAdmin() && isValidId(contentId);
+    }
+  }
+}

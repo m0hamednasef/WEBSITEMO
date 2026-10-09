@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+:root {
+  /* Logo-Derived Brand Tokens (Light Theme Defaults) */
+  --ms-navy-dark: #090d1a;
+  --ms-navy-primary: #162952;
+  --ms-navy-accent: #1e2d63;
+  --ms-cyan-primary: #0284c7;
+  --ms-cyan-light: #38bdf8;
+  --ms-peach-accent: #e09f75;
+
+  /* Surfaces - Light */
+  --bg-main: #f1f5fb;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #f8fafc;
+  --text-main: #0c1527;
+  --text-muted: #64748b;
+  --border-subtle: #e2e8f0;
+  --border-accent: #bae6fd;
+}
+
+.dark {
+  /* Surfaces - Dark (Navy Midnight) */
+  --bg-main: #070a14;
+  --bg-surface: #0e172b;
+  --bg-surface-elevated: #14203b;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-subtle: #1e2e4e;
+  --border-accent: #0284c7;
+}
+
+@layer base {
+  html {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.8;
+  }
+
+  [dir="rtl"] body {
+    font-family: 'IBM Plex Sans Arabic', 'Inter', system-ui, sans-serif;
+  }
+}
+
+/* Floating Pill Buttons (Logo Navy & Sky Cyan) */
+.btn-pill-brand {
+  background: linear-gradient(135deg, #162952 0%, #1e2d63 50%, #0284c7 100%);
+  color: #ffffff;
+  border-radius: 9999px;
+  padding: 12px 28px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.25s cubic-bezier(0.2, 0.7, 0.4, 1);
+  box-shadow: 0 4px 18px rgba(2, 132, 199, 0.25);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.btn-pill-brand:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.35);
+  border-color: rgba(56, 189, 248, 0.6);
+}
+
+.btn-pill-outline {
+  border-radius: 9999px;
+  padding: 12px 24px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.25s ease;
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+}
+
+.btn-pill-outline:hover {
+  border-color: #38bdf8;
+  transform: translateY(-1.5px);
+}
+
+/* Editorial Studio Cards */
+.card-studio {
+  background-color: var(--bg-surface);
+  border-radius: 24px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 20px rgba(9, 13, 26, 0.04);
+  transition: all 0.3s cubic-bezier(0.2, 0.7, 0.4, 1);
+}
+
+.dark .card-studio {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+.card-studio:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 12px 32px rgba(2, 132, 199, 0.12);
+  transform: translateY(-3px);
+}
+
+/* Inputs */
+.input-studio {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 10px 16px;
+  color: var(--text-main);
+  transition: all 0.2s ease;
+}
+
+.input-studio:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}

@@ -1,0 +1,136 @@
+{
+  "entities": {
+    "App": {
+      "title": "App",
+      "description": "A mobile application showcased on Mohamed Studio",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The title/name of the mobile application in English",
+          "maxLength": 200
+        },
+        "nameAr": {
+          "type": "string",
+          "description": "The title/name of the mobile application in Arabic",
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "description": "Short summary or description in English",
+          "maxLength": 2000
+        },
+        "descriptionAr": {
+          "type": "string",
+          "description": "Short summary or description in Arabic",
+          "maxLength": 2000
+        },
+        "iconUrl": {
+          "type": "string",
+          "description": "Icon URL or base64 data URI",
+          "maxLength": 500000
+        },
+        "playStoreUrl": {
+          "type": "string",
+          "description": "Direct Google Play Store link",
+          "maxLength": 2000
+        },
+        "order": {
+          "type": "number",
+          "description": "Sort order index for display"
+        },
+        "category": {
+          "type": "string",
+          "description": "App category",
+          "maxLength": 200
+        },
+        "downloadsBadge": {
+          "type": "string",
+          "description": "Downloads badge text",
+          "maxLength": 100
+        },
+        "ratingBadge": {
+          "type": "string",
+          "description": "Rating badge text",
+          "maxLength": 100
+        },
+        "version": {
+          "type": "string",
+          "description": "App release version",
+          "maxLength": 50
+        },
+        "privacyUrl": {
+          "type": "string",
+          "description": "App privacy policy URL",
+          "maxLength": 1000
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp in ISO format"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp in ISO format"
+        }
+      },
+      "required": ["name", "description", "iconUrl", "playStoreUrl", "order"]
+    },
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "Global customizable website content for Mohamed Studio",
+      "type": "object",
+      "properties": {
+        "heroHeadline": {
+          "type": "string",
+          "description": "Hero section main title in English",
+          "maxLength": 500
+        },
+        "heroHeadlineAr": {
+          "type": "string",
+          "description": "Hero section main title in Arabic",
+          "maxLength": 500
+        },
+        "tagline": {
+          "type": "string",
+          "description": "Hero section tagline / subtitle in English",
+          "maxLength": 1000
+        },
+        "taglineAr": {
+          "type": "string",
+          "description": "Hero section tagline / subtitle in Arabic",
+          "maxLength": 1000
+        },
+        "aboutText": {
+          "type": "string",
+          "description": "About Mohamed Studio paragraph in English",
+          "maxLength": 5000
+        },
+        "aboutTextAr": {
+          "type": "string",
+          "description": "About Mohamed Studio paragraph in Arabic",
+          "maxLength": 5000
+        },
+        "contactEmail": {
+          "type": "string",
+          "description": "Contact email address",
+          "maxLength": 200
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["heroHeadline", "tagline", "aboutText", "contactEmail"]
+    }
+  },
+  "firestore": {
+    "/apps/{appId}": {
+      "schema": "App",
+      "description": "Collection of showcase mobile applications"
+    },
+    "/site_content/{contentId}": {
+      "schema": "SiteSettings",
+      "description": "Singleton configuration document for website hero, about, and contact copy"
+    }
+  }
+}
